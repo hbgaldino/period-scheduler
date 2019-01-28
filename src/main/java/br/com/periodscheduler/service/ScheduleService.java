@@ -8,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +27,8 @@ public class ScheduleService {
     TaskRepository taskRepository;
 
     public void scheduleTask(Task task) {
+
+        log.info("Scheduling task: " + task.getId());
 
         //TODO: resolve issues due timezone
         long delay = task.getScheduledTime().getTime() - System.currentTimeMillis();
@@ -67,6 +68,11 @@ public class ScheduleService {
 
     public List<ScheduledTask> getScheduledTasks() {
         return scheduleMap.keySet().stream().collect(Collectors.toList());
+    }
+
+    public void loadAllPendingTasks() {
+        log.info("loading all pending tasks...");
+        taskRepository.findAllByActiveIsTrue().stream().forEach(this::scheduleTask);
     }
 
 }
