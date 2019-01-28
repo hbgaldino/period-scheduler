@@ -31,9 +31,6 @@ public class PeriodSchedulerApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("TESTE    ");
-        userRepository.findAll().forEach(user -> log.info(user.toString()));
-        taskRepository.findAll().forEach(task -> log.info(task.toString()));
     }
 }
 
